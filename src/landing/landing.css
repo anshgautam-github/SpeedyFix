@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: auto; /* smooth scrolling is handled by GSAP so it cooperates with the pinned journey */
+  overflow-x: clip;
+}
+body {
+  overflow-x: clip;
+  background: #060a13;
+}
+
+.sf-landing {
+  --road-h: clamp(210px, 36svh, 420px);
+}
+@media (max-width: 767px) {
+  .sf-landing {
+    --road-h: clamp(190px, 30svh, 300px);
+  }
+}
+
+/* Gradient-clipped text looks jagged ("scratched") once it is moved by a transform animation, so headings use a solid colour. */
+.metallic {
+  color: #f4f7fb;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Tailwind's preflight resets headings to weight 400, which made the display face look thin and uneven. */
+  h1, h2, h3, h4 {
+    font-family: theme('fontFamily.display');
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+}
+
+/* One small type scale for the whole product. */
+@layer components {
+  .font-display { font-weight: 700; letter-spacing: -0.01em; }
+  .t-display { font-family: theme('fontFamily.display'); font-weight: 700; font-size: clamp(1.875rem, 3.2vw, 2.5rem); line-height: 1.12; letter-spacing: -0.02em; text-wrap: balance; }
+  .t-h1 { font-family: theme('fontFamily.display'); font-weight: 700; font-size: clamp(1.5rem, 2.4vw, 1.875rem); line-height: 1.2; letter-spacing: -0.015em; text-wrap: balance; }
+  .t-h2 { font-family: theme('fontFamily.display'); font-weight: 600; font-size: 1.125rem; line-height: 1.35; }
+  .t-body { font-size: 1rem; line-height: 1.6; }
+  .t-small { font-size: 0.875rem; line-height: 1.5; }
+}
+
+/* world pins */
+.sf-pin .pin-bg {
+  transition: fill 0.4s ease;
+}
+.sf-pin.is-on .pin-bg {
+  fill: #1f6bff;
+}
+
+/* driver marker pulse and "searching" dot */
+.sf-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sf-pulse 1.8s ease-out infinite;
+}
+@keyframes sf-pulse {
+  from { transform: scale(1); opacity: 0.85; }
+  to { transform: scale(2); opacity: 0; }
+}
+.sf-ping::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: #5ba2ff;
+  animation: sf-ping 1.4s ease-out infinite;
+}
+@keyframes sf-ping {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(3); opacity: 0; }
+}
+.sf-twinkle {
+  animation: sf-twinkle 3.2s ease-in-out infinite;
+}
+@keyframes sf-twinkle {
+  50% { opacity: 0.15; }
+}
+
+.sf-landing :focus-visible {
+  outline: 2px solid #5ba2ff;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-pulse, .sf-ping::after, .sf-twinkle {
+    animation: none;
+  }
+}

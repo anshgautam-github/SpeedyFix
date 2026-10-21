@@ -1,0 +1,8 @@
+/* Portal-only styles. Tailwind itself is loaded by landing.css (or your own entry stylesheet). */
+.sf-portal { color-scheme: dark; }
+.sf-portal ::selection { background: rgba(31, 107, 255, 0.45); }
+.sf-portal input[type='date'] { color-scheme: dark; }
+.sf-portal summary::-webkit-details-marker { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sf-portal *, .sf-portal *::before, .sf-portal *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
